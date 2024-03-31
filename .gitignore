@@ -2,7 +2,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=intellij+iml,java
 
 ### Intellij+iml ###
-# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
+# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and R`ide`r
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 # User-specific stuff
@@ -118,3 +118,6 @@ replay_pid*
 # Project exclude paths
 /.gradle/
 /build/
+.idea
+.gradle/
+.gradle
