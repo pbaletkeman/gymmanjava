@@ -2,6 +2,8 @@ package ca.letkeman.gymmanjava;
 
 import ca.letkeman.gymmanjava.model.Exercise;
 import ca.letkeman.gymmanjava.repository.ExerciseRepository;
+import ca.letkeman.gymmanjava.service.FileStorageService;
+import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -18,6 +20,9 @@ public class GymManApplication {
 
 	private static final Logger log = LoggerFactory.getLogger(GymManApplication.class);
 
+	@Resource
+	FileStorageService fileStorageService;
+
 	public static void main(String[] args) {
 		SpringApplication.run(GymManApplication.class, args);
 	}
@@ -25,6 +30,12 @@ public class GymManApplication {
 	@GetMapping("/hello")
 	public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
 		return String.format("Hello %s!", name);
+	}
+
+	@Bean CommandLineRunner resourceInit(){
+		return  args -> {
+			fileStorageService.init();
+		};
 	}
 
 	@Bean
