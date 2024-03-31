@@ -3,6 +3,11 @@ package ca.letkeman.gymmanjava.controller;
 import ca.letkeman.gymmanjava.message.ResponseMessage;
 import ca.letkeman.gymmanjava.model.FileInfo;
 import ca.letkeman.gymmanjava.service.FileStorageService;
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,10 +45,18 @@ public class FilesController {
   @GetMapping("/files")
   public ResponseEntity<List<FileInfo>> getFileListing() {
     List<FileInfo> fileInfos = fileStorageService.loadAll().map(path -> {
+      long fileSize = 0;
+      try {
+        Path rootPath = fileStorageService.getRoot();
+        fileSize = Files.size(Paths.get(rootPath.toString() + FileSystems.getDefault().getSeparator() + path.getFileName().toString()));
+
+      } catch (IOException e) {
+        System.out.println(e.getMessage());
+      }
       String fileName = path.getFileName().toString();
       String url = MvcUriComponentsBuilder.fromMethodName(FilesController.class, "getFile", path.getFileName().toString()).build().toString();
 
-      return new FileInfo(fileName, url, 0L, "0", LocalDateTime.now());
+      return new FileInfo(fileName, url, fileSize, FileInfo.humanSize(fileSize), LocalDateTime.now());
     }).collect(Collectors.toList());
 
     return ResponseEntity.status(HttpStatus.OK).body(fileInfos);

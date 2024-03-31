@@ -19,4 +19,8 @@ public interface FileStorageService {
   public boolean delete(String fileName);
 
   public List<String> deleteMany(List<String> fileNames);
+
+  public Path getRoot();
+
+  public void setRoot(Path path);
 }

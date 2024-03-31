@@ -1,5 +1,6 @@
 package ca.letkeman.gymmanjava.model;
 
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.StringJoiner;
@@ -60,6 +61,20 @@ public class FileInfo {
     this.size = size;
     this.humanSize = humanSize;
     this.createDate = createDate;
+  }
+
+  public static String humanSize(long size){
+    String returnValue = "0";
+    final long ONE_MB = 1048576L;
+    final long ONE_KB = 1024L;
+    if (size > ONE_MB){
+      returnValue = new DecimalFormat("0.00").format( (double) size / ONE_MB) + " mb";
+    } else if (size > ONE_KB) {
+      returnValue = new DecimalFormat("0.00").format( (double) size / ONE_KB) + " kb";
+    } else {
+      returnValue = size + " bytes";
+    }
+    return returnValue;
   }
 
   @Override

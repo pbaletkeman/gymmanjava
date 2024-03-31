@@ -113,10 +113,12 @@ public class FileStorageServiceImpl implements FileStorageService {
     }
   }
 
+  @Override
   public Path getRoot() {
     return root;
   }
 
+  @Override
   public void setRoot(Path root) {
     this.root = root;
   }
